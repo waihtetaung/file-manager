@@ -34,7 +34,7 @@ class FileManageDemoApplicationTests {
 		document.setName(file.getName());
 
 		byte[] bytes = Files.readAllBytes(file.toPath());
-		document.setContent(bytes);
+		//document.setContent(bytes);
 		long fileSize = bytes.length;
 		document.setSize(fileSize);
 		document.setUploadTime(new Date());

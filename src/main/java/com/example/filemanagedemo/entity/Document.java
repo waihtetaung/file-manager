@@ -19,7 +19,8 @@ public class Document {
     private long size;
     @Column(name = "upload_time")
     private Date uploadTime;
-    private byte[] content;
+    @Column(length = 255, nullable = false)
+    private String filePath;
 
     public Document(Long id, String name, long size) {
         this.id = id;
