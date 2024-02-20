@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html th:fragment="layout(main)" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark text-light" >
+    <a href="#" class="navbar-brand">  Security</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#myNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="mr-3"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
+        <a th:href="@{/signup}" ><i class="fas fa-user-plus mr-2"></i>Sign Up</a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <a class="text-muted" th:text="${'Hello' + #authentication.getName()}"></a>
+        <a href="javascript:document.logoutForm.submit()" >Logout </a>
+        <form name="logoutForm" th:action="@{/logout}" method="post"
+              th:hidden="true">
+            <input hidden="true" type="submit" value="submit">
+        </form>
+    </div>
+</nav>
+
+<div th:replace="${main}"></div>
+
+</body>
+</html>

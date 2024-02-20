@@ -3,7 +3,7 @@ package com.example.filemanagedemo.controller;
 import com.example.filemanagedemo.entity.Document;
 import com.example.filemanagedemo.repository.DocumentRepository;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,16 +20,22 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
 @Controller
+@RequiredArgsConstructor
 public class AppController {
 
-    @Autowired
-    private  DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
 
     @GetMapping("/")
+    private String home(){
+        return "welcome";
+    }
+
+    @GetMapping("/home")
     public String viewHomePage(Model model){
         List<Document> documentList = documentRepository.findAll();
         model.addAttribute("documentList", documentList);
@@ -39,7 +45,7 @@ public class AppController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("document") MultipartFile multipartFile,
                              RedirectAttributes attributes) throws IOException {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
         String uploadDir = "/MemberName/ProjectName/";
         String filePath = uploadDir + fileName;

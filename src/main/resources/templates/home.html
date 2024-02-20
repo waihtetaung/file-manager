@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="layout/masterLayout::layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>File Drive</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
+<main role="main">
     <div class="container-fluid text-center">
        <div> <h1>Document Manager</h1></div>
 
@@ -44,5 +46,6 @@
             </div>
         </form>
     </div>
+</main>
 </body>
 </html>
