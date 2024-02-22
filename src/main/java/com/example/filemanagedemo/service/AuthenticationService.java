@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationService{
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -37,7 +37,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse signin(AuthenticationRequest request) {
+    public AuthenticationResponse signIn(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -55,6 +55,7 @@ public class AuthenticationService {
                     .build();
         }
     }
+
 }
 
 

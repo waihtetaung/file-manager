@@ -43,11 +43,11 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
-        AuthenticationResponse response = authService.signin(new AuthenticationRequest(email, password));
+    public String logIn(@RequestBody AuthenticationRequest request, Model model) {
+        AuthenticationResponse response = authService.signIn(request);
         if (response.getToken() != null) {
             return "redirect:/home";
-        } else {
+        } else{
             model.addAttribute("loginError", true);
             return "login";
         }
