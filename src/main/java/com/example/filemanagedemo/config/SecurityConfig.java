@@ -33,7 +33,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .formLogin(c -> c.loginPage("/login").failureUrl("/login-error").permitAll())
+                .formLogin(c -> c.loginPage("/login").failureUrl("/login-error").defaultSuccessUrl("/home").permitAll())
                 .logout(c -> c.logoutUrl("/logout").logoutSuccessUrl("/login").permitAll())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/bootstrap/**", "/signup", "/").permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

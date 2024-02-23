@@ -4,6 +4,7 @@ import com.example.filemanagedemo.dto.AuthenticationRequest;
 import com.example.filemanagedemo.dto.AuthenticationResponse;
 import com.example.filemanagedemo.dto.RegisterRequest;
 import com.example.filemanagedemo.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,13 @@ public class AccountController {
 
     @GetMapping("/login-error")
     public String loginError(Model model){
-        model.addAttribute("loginError", true);
+        model.addAttribute("loginError", false);
         return "login";
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(AuthenticationRequest request, Model model){
+        model.addAttribute("request", request);
         return "login";
     }
 
@@ -43,13 +45,20 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String logIn(@RequestBody AuthenticationRequest request, Model model) {
-        AuthenticationResponse response = authService.signIn(request);
-        if (response.getToken() != null) {
+    public String loginUser(@ModelAttribute("authenticationRequest") AuthenticationRequest request, BindingResult result, Model model, HttpServletResponse response){
+        if(result.hasErrors()){
+            return "login";
+        }
+        AuthenticationResponse authenticationResponse = authService.signIn(request, response);
+        if(authenticationResponse.getToken() != null){
             return "redirect:/home";
-        } else{
+        } else {
             model.addAttribute("loginError", true);
             return "login";
         }
     }
+
+
 }
+
+

@@ -31,7 +31,7 @@ public class AppController {
     private final DocumentRepository documentRepository;
 
     @GetMapping("/")
-    private String home(){
+    public String home(){
         return "welcome";
     }
 
