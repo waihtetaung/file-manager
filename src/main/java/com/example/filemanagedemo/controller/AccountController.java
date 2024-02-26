@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 @RequiredArgsConstructor
 public class AccountController {
@@ -20,12 +21,6 @@ public class AccountController {
     @GetMapping("/login-error")
     public String loginError(Model model){
         model.addAttribute("loginError", false);
-        return "login";
-    }
-
-    @GetMapping("/login")
-    public String login(AuthenticationRequest request, Model model){
-        model.addAttribute("request", request);
         return "login";
     }
 
@@ -44,8 +39,14 @@ public class AccountController {
         return "redirect:/";
     }
 
-    @PostMapping("/login")
-    public String loginUser(@ModelAttribute("authenticationRequest") AuthenticationRequest request, BindingResult result, Model model, HttpServletResponse response){
+    @GetMapping("/login")
+    public String login(Model model){
+        model.addAttribute("authenticationRequest", new AuthenticationRequest());
+        return "login";
+    }
+
+    @PostMapping("/authenticate")
+    public String authenticateUser(@ModelAttribute("authenticationRequest") AuthenticationRequest request, BindingResult result, Model model, HttpServletResponse response){
         if(result.hasErrors()){
             return "login";
         }
@@ -57,8 +58,7 @@ public class AccountController {
             return "login";
         }
     }
-
-
 }
+
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="layout/masterLayout::layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -13,14 +13,14 @@
             <div class="alert alert-danger" th:if="${loginError}">
                 <p class="lead">Invalid Credentials!</p>
             </div>
-            <form action="@{/login}" th:object="${authenticationRequest}" method="post" class="p-3" >
+            <form th:action="@{/authenticate}" th:object="${registerRequest}" method="post" class="p-3" >
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input id="email"  name="email" class="form-control" type="text">
+                    <input id="email"  name="email" class="form-control" type="text" th:field="*{email}">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password"  id="password" name="password" class="form-control">
+                    <input type="password"  id="password" name="password" class="form-control" th:field="*{password}">
                 </div>
                 <input type="submit" class="btn btn-primary w-100" value="Login">
             </form>

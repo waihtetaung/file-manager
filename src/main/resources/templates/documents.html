@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:replace="layout/masterLayout::layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Documents</title>
+</head>
+<body>
+<h1>Documents</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Upload Time</th>
+        <th>File Path</th>
+        <th>Project Name</th>
+        <th>User Name</th>
+        <th>Role Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="document : ${documents}">
+        <td th:text="${document.name}"></td>
+        <td th:text="${document.size}"></td>
+        <td th:text="${document.uploadTime}"></td>
+        <td th:text="${document.filePath}"></td>
+        <td th:text="${document.project.projectName}"></td>
+        <td th:text="${document.projectAccesses[0].user.name}"></td>
+        <td th:text="${document.projectAccesses[0].role.roleName}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

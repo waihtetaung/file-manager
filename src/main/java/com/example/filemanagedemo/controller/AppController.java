@@ -37,7 +37,7 @@ public class AppController {
 
     @GetMapping("/home")
     public String viewHomePage(Model model){
-        List<Document> documentList = documentRepository.findAll();
+        List<Document> documentList = documentRepository.findAllBy();
         model.addAttribute("documentList", documentList);
         return "home";
     }
@@ -95,6 +95,13 @@ public class AppController {
                 outputStream.write(buffer, 0, bytesRead);
             }
         }
+    }
+
+    @GetMapping("/documents")
+    public String getDocumentsForUserByRoleAndProject(@RequestParam("userId") Integer userId, @RequestParam("roleName") String roleName, @RequestParam("projectId") Integer projectId, Model model) {
+        List<Document> documents = documentRepository.findDocumentsForUserByRoleAndProject(userId, roleName, projectId);
+        model.addAttribute("documents", documents);
+        return "documents";
     }
 
 }

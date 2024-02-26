@@ -29,17 +29,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .formLogin(c -> c.loginPage("/login").failureUrl("/login-error").defaultSuccessUrl("/home").permitAll())
+                .formLogin(c -> c.loginPage("/login").failureUrl("/login-error").permitAll())
                 .logout(c -> c.logoutUrl("/logout").logoutSuccessUrl("/login").permitAll())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/bootstrap/**", "/signup", "/").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/upload","/download", "/bootstrap/**", "/signup", "/").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
-

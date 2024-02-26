@@ -21,11 +21,13 @@ public class Document {
     private Date uploadTime;
     @Column(length = 255, nullable = false)
     private String filePath;
+    @ManyToOne
+    @JoinColumn(name = "projectId")
+    private Project project;
 
     public Document(Long id, String name, long size) {
         this.id = id;
         this.name = name;
         this.size = size;
     }
-
 }

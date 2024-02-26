@@ -11,19 +11,21 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User{
-
+@Table(name = "projects")
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
-    private String name;
-    private String email;
-    private String password;
-    @OneToOne
-    private Role role;
-    @ManyToMany
-    private List<Project> projects = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    private Integer projectId;
+    private String projectName;
+
+    @OneToMany(mappedBy = "project")
+    private List<Document> documents = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "projects")
+    private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project")
     private List<ProjectAccess> projectAccesses = new ArrayList<>();
 }
+
+
