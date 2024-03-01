@@ -11,7 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,7 @@ public class AuthenticationService{
                 .role(Role.builder().build())
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken((UserDetails) user);
+        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse
                 .builder()
                 .token(jwtToken)
@@ -43,14 +45,15 @@ public class AuthenticationService{
 
     public AuthenticationResponse signIn(AuthenticationRequest request, HttpServletResponse response) {
         try {
-            authenticationManager.authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getEmail(),
                             request.getPassword()
                     )
             );
-            var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-            var jwtToken = jwtService.generateToken((UserDetails) user);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String jwtToken = jwtService.generateToken(userDetails);
             Cookie cookie = new Cookie("jwtToken", jwtToken);
             cookie.setMaxAge(24 * 60 * 60);
             cookie.setPath("/");
@@ -63,6 +66,7 @@ public class AuthenticationService{
                     .build();
         }
     }
+
 
 
 }
