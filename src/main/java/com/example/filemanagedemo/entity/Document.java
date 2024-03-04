@@ -21,6 +21,7 @@ public class Document {
     private Date uploadTime;
     @Column(length = 255, nullable = false)
     private String filePath;
+    
     @ManyToOne
     @JoinColumn(name = "projectId")
     private Project project;
