@@ -30,14 +30,14 @@ public class AccountController {
         return "signup";
     }
 
-    @PostMapping("/signup")
-    public String saveUser(@ModelAttribute("registerRequest") RegisterRequest request, BindingResult result){
-        if(result.hasErrors()){
-            return "signup";
-        }
-        authService.register(request);
-        return "redirect:/";
-    }
+//    @PostMapping("/signup")
+//    public String saveUser(@ModelAttribute("registerRequest") RegisterRequest request, BindingResult result){
+//        if(result.hasErrors()){
+//            return "signup";
+//        }
+//        authService.register(request);
+//        return "redirect:/";
+//    }
 
     @GetMapping("/login")
     public String login(Model model){

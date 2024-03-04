@@ -21,8 +21,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
     private String roleName;
-    @OneToOne
-    private User user;
+    
+//    @OneToOne
+//    private User user;
+    
     @OneToMany(mappedBy = "role")
     private List<ProjectAccess> projectAccesses = new ArrayList<>();
 }

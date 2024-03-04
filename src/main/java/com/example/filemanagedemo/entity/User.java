@@ -19,8 +19,12 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Entity
 public class User implements UserDetails {
-    private final RoleRepository roleRepository;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2667558048942297767L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,20 +32,22 @@ public class User implements UserDetails {
     private String name;
     private String email;
     private String password;
-    @OneToOne
-    private Role role;
-    @ManyToMany
-    private List<Project> projects = new ArrayList<>();
+    
+//    @OneToOne
+//    private Role role;
+//    @ManyToMany
+//    private List<Project> projects = new ArrayList<>();
+    	
     @OneToMany(mappedBy = "user")
     private List<ProjectAccess> projectAccesses = new ArrayList<>();
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<Role> roles = roleRepository.findByUser(this);
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        List<Role> roles = roleRepository.findByUser(this);
+//        return roles.stream()
+//                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public String getPassword() {
@@ -72,4 +78,10 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

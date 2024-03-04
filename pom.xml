@@ -14,7 +14,7 @@
 	<name>file-manage-demo</name>
 	<description>file-manage-demo</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

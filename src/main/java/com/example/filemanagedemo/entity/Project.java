@@ -20,8 +20,8 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Document> documents = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "projects")
-    private List<User> users = new ArrayList<>();
+//    @ManyToMany(mappedBy = "projects")
+//    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
     private List<ProjectAccess> projectAccesses = new ArrayList<>();
